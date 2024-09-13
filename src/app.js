@@ -1,13 +1,14 @@
+//imports relevantes
 import express from 'express';
 import handlebars from 'express-handlebars';
 import http from 'http';
 import { Server } from "socket.io";
 import path from 'path';
 import __dirname from './utils.js';
-
+//importacion de rutas
 import productsRouter from "./routes/products.js";
 import cartsRouter from "./routes/carts.js";
-
+//importacion del productManager
 import ProductManager from './productManager.js';
 
 const app = express();
@@ -19,26 +20,30 @@ app.engine('handlebars', handlebars.engine());
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
-// Middleware para parsear JSON y servir archivos estáticos
+// Middlewares
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 const productManager = new ProductManager(path.join(__dirname, 'data', 'products.json'));
 
 //Rutas
-app.use('/api/products', productsRouter);
+app.use('/api/products', productsRouter(io));
 app.use('/api/carts', cartsRouter)
 
 
-// Ruta para la página principal (home)
+// Ruta para la página principal
 app.get('/', async (req, res) => {
     const products = await productManager.getProducts();
-    res.render('home', { products });
+    res.render('home', { 
+        products, 
+        style: 'home.css' });
 });
 
 // Ruta para la página de productos en tiempo real
 app.get('/realtimeproducts', (req, res) => {
-    res.render('realTimeProducts');
+    res.render('realTimeProducts', {
+        style: 'realtimeproducts.css'
+    });
 });
 
 // Configurar Socket.io
@@ -56,9 +61,19 @@ io.on('connection', (socket) => {
         const updatedProducts = await productManager.getProducts();
         io.emit('updateProducts', updatedProducts);
     });
+
+    // Escuchar el evento de eliminar producto
+    socket.on('deleteProduct', async (id) => {
+        const success = await productManager.deleteProduct(parseInt(id));
+        if (success) {
+            const updatedProducts = await productManager.getProducts();
+            io.emit('updateProducts', updatedProducts);
+        }
+    });
 });
 
-const PORT = process.env.PORT || 8080;
-server.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+// Iniciar el servidor
+const port = 8080;
+server.listen(port, () => {
+    console.log(`Servidor corriendo en http://localhost:${port}`);
 });

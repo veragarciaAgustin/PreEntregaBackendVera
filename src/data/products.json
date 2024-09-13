@@ -16,36 +16,12 @@
     "stock": 100
   },
   {
-    "id": 3,
-    "name": "Cafetera Automática",
-    "description": "Cafetera programable con molinillo integrado",
-    "price": 149.99,
-    "category": "Electrodomésticos",
-    "stock": 30
-  },
-  {
-    "id": 4,
-    "name": "Zapatillas Deportivas",
-    "description": "Zapatillas cómodas para correr y hacer ejercicio",
-    "price": 89.99,
-    "category": "Ropa y Calzado",
-    "stock": 200
-  },
-  {
     "id": 5,
     "name": "Set de Sartenes Antiadherentes",
     "description": "Juego de 3 sartenes de diferentes tamaños",
     "price": 79.99,
     "category": "Hogar y Cocina",
     "stock": 75
-  },
-  {
-    "id": 6,
-    "name": "Libro: 'El Arte de la Programación'",
-    "description": "Guía completa para aprender programación desde cero",
-    "price": 39.99,
-    "category": "Libros",
-    "stock": 150
   },
   {
     "id": 7,
@@ -62,10 +38,5 @@
     "price": 299.99,
     "category": "Electrodomésticos",
     "stock": 25
-  },
-  {
-    "id": 9,
-    "name": "Agustin",
-    "price": "123"
   }
 ]

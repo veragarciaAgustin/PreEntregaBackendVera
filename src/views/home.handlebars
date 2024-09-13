@@ -1,11 +1,18 @@
-<h1>Bienvenidos a los productos</h1>
-<h1>Productos</h1>
-<ul>
-    {{#each products}}
-    <li>{{this.name}} - {{this.price}}</li>
-    {{/each}}
+<h1>Bienvenido a la segunda entrega de Backend</h1>
+<h2>Listado de productos</h2>
+<ul id="productList">
+  {{#each products}}
+    <div>
+      <h3>{{this.name}}</h3>
+      <p>{{this.description}}</p>
+      <li>${{this.price}}</li>
+      <li>{{this.category}}</li>
+      <li>{{this.stock}} unidades</li>
+    </div>
+    <hr>
+  {{/each}}
 </ul>
-{{!-- Agregamos el script de codigo JS, siempre al final --}}
+{{! Agregamos el script de codigo JS, siempre al final }}
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/socket.io/socket.io.js"></script>

@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: red;
+}
+
+#productForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#productForm input {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid black;
+}
+
+#productForm button {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid white;
+    background-color: rgb(1, 5, 5);
+    color: white;
+}
+
+#productList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.product-item {
+    border: 1px solid black;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    overflow-y: auto;
+}
+
+#productList h3 {
+    color: #5C7AFF;
+    margin-top: 0;
+}
+
+#productList p {
+    color: #5C7AFF;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+#productList ul {
+    padding: 0;
+    margin: 0;
+}
+
+#productList li {
+    color: #5C7AFF;
+    list-style-type: none;
+}
+
+#productList button {
+    margin-top: 1.5rem;
+    padding: 0.5rem;
+    border: 1px solid white;
+    background-color: rgb(13, 215, 230);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    #productList {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    #productList {
+        grid-template-columns: 1fr;
+    }
+}

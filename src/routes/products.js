@@ -27,57 +27,61 @@ function generateUniqueId(products) {
 }
 
 
-//GET
-router.get("/", async (req, res) => {
-    const products = await readProducts();
-    res.send(products);
-});
+export default function(io) {
+    //GET
+    router.get("/", async (req, res) => {
+        const products = await readProducts();
+        res.send(products);
+    });
 
-//GET por ID
-router.get("/:pid", async (req, res) => {
-    const { pid } = req.params;
-    const products = await readProducts();
-    const product = products.find(p => p.id === parseInt(pid));
-    res.send(product || { error: "Producto no encontrado" });
-});
+    //GET por ID
+    router.get("/:pid", async (req, res) => {
+        const { pid } = req.params;
+        const products = await readProducts();
+        const product = products.find(p => p.id === parseInt(pid));
+        res.send(product || { error: "Producto no encontrado" });
+    });
 
-//POST
-router.post("/", async (req, res) => {
-    const products = await readProducts();
-    const product = { id: generateUniqueId(products), ...req.body };
-    products.push(product);
-    await writeProducts(products);
-    res.send(product);
-});
-
-//PUT por ID
-router.put("/:pid", async (req, res) => {
-    const { pid } = req.params;
-    const products = await readProducts();
-    const index = products.findIndex(p => p.id === parseInt(pid));
-
-    if (index !== -1) {
-        products[index] = { ...products[index], ...req.body };
+    //POST
+    router.post("/", async (req, res) => {
+        const products = await readProducts();
+        const product = { id: generateUniqueId(products), ...req.body };
+        products.push(product);
         await writeProducts(products);
-        res.send(products[index]);
-    } else {
-        res.send({ error: "Producto no encontrado" });
-    }
-});
+        io.emit('updateProducts', products);  // Emitir evento de actualización
+        res.send(product);
+    });
 
-//DELETE por ID
-router.delete("/:pid", async (req, res) => {
-    const { pid } = req.params;
-    const products = await readProducts();
-    const newProducts = products.filter(p => p.id !== parseInt(pid));
+    //PUT por ID
+    router.put("/:pid", async (req, res) => {
+        const { pid } = req.params;
+        const products = await readProducts();
+        const index = products.findIndex(p => p.id === parseInt(pid));
 
-    if (newProducts.length !== products.length) {
-        await writeProducts(newProducts);
-        res.send({ status: "success" });
-    } else {
-        res.send({ error: "Producto no encontrado" });
-    }
-});
+        if (index !== -1) {
+            products[index] = { ...products[index], ...req.body };
+            await writeProducts(products);
+            io.emit('updateProducts', products);  // Emitir evento de actualización
+            res.send(products[index]);
+        } else {
+            res.send({ error: "Producto no encontrado" });
+        }
+    });
 
+    //DELETE por ID
+    router.delete("/:pid", async (req, res) => {
+        const { pid } = req.params;
+        const products = await readProducts();
+        const newProducts = products.filter(p => p.id !== parseInt(pid));
 
-export default router;
+        if (newProducts.length !== products.length) {
+            await writeProducts(newProducts);
+            io.emit('updateProducts', newProducts);  // Emitir evento de actualización
+            res.send({ status: "success" });
+        } else {
+            res.send({ error: "Producto no encontrado" });
+        }
+    });
+
+    return router;
+}
