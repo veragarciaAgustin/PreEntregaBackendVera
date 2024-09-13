@@ -1,0 +1,12 @@
+<h1>Bienvenidos a los productos</h1>
+<h1>Productos</h1>
+<ul>
+    {{#each products}}
+    <li>{{this.name}} - {{this.price}}</li>
+    {{/each}}
+</ul>
+{{!-- Agregamos el script de codigo JS, siempre al final --}}
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realtime.js"></script>

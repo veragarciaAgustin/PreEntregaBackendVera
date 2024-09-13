@@ -4,7 +4,7 @@ import path from "path";
 
 const router = Router();
 
-const filePath = path.resolve("./src/json/products.json");
+const filePath = path.resolve("./src/data/products.json");
 
 // Función para leer el archivo JSON
 const readProducts = async () => {

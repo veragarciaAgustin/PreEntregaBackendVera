@@ -1,5 +1,5 @@
 {
-  "name": "preentregabackend",
+  "name": "ejemplo",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -9,9 +9,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "type": "module",
+  "description": "",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.21.0",
+    "express-handlebars": "^8.0.1",
+    "socket.io": "^4.7.5"
   }
 }
