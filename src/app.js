@@ -23,7 +23,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Middlewares
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 const productManager = new ProductManager(path.join(__dirname, 'data', 'products.json'));
 
