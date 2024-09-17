@@ -8,6 +8,7 @@ import __dirname from './utils.js';
 //importacion de rutas
 import productsRouter from "./routes/products.js";
 import cartsRouter from "./routes/carts.js";
+import viewsRouter from "./routes/views.js";
 //importacion del productManager
 import ProductManager from './productManager.js';
 
@@ -31,20 +32,8 @@ app.use('/api/products', productsRouter(io));
 app.use('/api/carts', cartsRouter)
 
 
-// Ruta para la página principal
-app.get('/', async (req, res) => {
-    const products = await productManager.getProducts();
-    res.render('home', { 
-        products, 
-        style: 'home.css' });
-});
-
-// Ruta para la página de productos en tiempo real
-app.get('/realtimeproducts', (req, res) => {
-    res.render('realTimeProducts', {
-        style: 'realtimeproducts.css'
-    });
-});
+//Views
+app.use('/', viewsRouter);
 
 // Configurar Socket.io
 io.on('connection', (socket) => {
